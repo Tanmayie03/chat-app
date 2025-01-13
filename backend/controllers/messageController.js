@@ -37,6 +37,12 @@ export const sentMessages = async (req, res) => {
     const senderId = req.user._id;
     let imageUrl;
     if (image) {
+      const imageSizeInBytes = Buffer.byteLength(image, "base64");
+      if (imageSizeInBytes > 1048576) {
+        return res
+          .status(400)
+          .json({ error: "Image size should be less than 1 MB" });
+      }
       const uploadResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadResponse.secure_url;
     }

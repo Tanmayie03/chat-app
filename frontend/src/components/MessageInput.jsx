@@ -15,6 +15,11 @@ const MessageInput = () => {
       toast.error("Please select an image file");
       return;
     }
+    if (file.size > 1048576) {
+      toast.error("Image size should be less than 1 MB");
+      console.log("File too large");
+      return;
+    }
 
     const reader = new FileReader();
     reader.onloadend = () => {

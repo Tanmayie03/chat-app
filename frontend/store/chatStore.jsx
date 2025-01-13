@@ -41,7 +41,9 @@ export const chatStore = create((set, get) => ({
       );
       set({ messages: [...messages, res.data] });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMsg =
+        error.response?.data?.error || "Image must be less than 800kb";
+      toast.error(errorMsg);
     } finally {
       set({ isMessagesLoading: false });
     }
